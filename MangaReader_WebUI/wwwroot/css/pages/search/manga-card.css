@@ -1,0 +1,32 @@
+/* Manga Cards */
+.manga-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.manga-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+/* Manga tag status */
+.manga-status {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.75rem;
+}
+
+/* Manga Title */
+.manga-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+}
