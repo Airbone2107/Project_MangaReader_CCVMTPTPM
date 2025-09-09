@@ -1,0 +1,464 @@
+/* Components CSS - Chứa styles cho các UI component chung */
+
+/* Thêm class mới để thay thế text-white với khả năng đổi màu theo chế độ sáng/tối */
+.theme-text {
+    color: var(--body-color) !important;
+}
+
+[data-bs-theme="dark"] .theme-text {
+    color: #ffffff !important;
+}
+
+[data-bs-theme="light"] .theme-text {
+    color: #212529 !important;
+}
+
+/* Card styles */
+.card {
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    background-color: var(--card-bg);
+    color: var(--card-color);
+}
+
+.card:hover {
+    box-shadow: var(--hover-shadow);
+}
+
+/* Button styles */
+.btn {
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    transition: all var(--transition-speed);
+}
+
+/* Loại bỏ hiệu ứng gợn sóng (ripple) */
+.btn::after {
+    /* Loại bỏ nội dung */
+    content: none;
+    display: none;
+}
+
+.btn:hover::after {
+    /* Loại bỏ animation */
+    animation: none;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+    z-index: var(--z-index-dropdown);
+    margin-top: 0.5rem !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Accordion styles */
+.accordion {
+    position: relative;
+    z-index: 1;
+}
+
+.accordion-button {
+    position: relative;
+    z-index: 2;
+}
+
+.accordion-collapse {
+    position: relative;
+    z-index: 1;
+    transition: all 0.35s ease;
+}
+
+/* Theme-aware accordion */
+.theme-aware-accordion .accordion-button {
+    color: var(--body-color);
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.theme-aware-accordion .accordion-button:not(.collapsed) {
+    color: var(--primary-color);
+    background-color: var(--active-bg);
+}
+
+.theme-aware-accordion .accordion-button:focus {
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+.theme-aware-accordion .accordion-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+/* List group styles */
+.theme-aware-list .list-group-item {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.theme-aware-list .list-group-item-action:hover {
+    background-color: var(--hover-bg);
+}
+
+.theme-aware-list .list-group-item .text-muted {
+    color: var(--secondary-color) !important;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination .page-link {
+    border-radius: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+    border: none;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Style đặc biệt cho dấu ... */
+.pagination .page-item .page-link.dots {
+    cursor: pointer;
+}
+
+.pagination .page-item .page-goto-input {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    font-size: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Đảm bảo không có hiệu ứng hover cho input */
+.pagination .page-item:hover .page-goto-input {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="light"] .pagination .page-link {
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+[data-bs-theme="light"] .pagination .page-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color);
+}
+
+[data-bs-theme="light"] .pagination .page-item.disabled .page-link {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+[data-bs-theme="light"] .pagination .page-item .page-goto-input {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color);
+}
+
+/* Đảm bảo không có hiệu ứng hover cho input trong chế độ sáng */
+[data-bs-theme="light"] .pagination .page-item:hover .page-goto-input {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Badge improvements */
+[data-bs-theme="dark"] .badge.bg-secondary {
+    background-color: #505a68 !important;
+}
+
+/* Theme switcher container */
+.theme-switcher-container {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fix for dark mode components */
+[data-bs-theme="dark"] .btn-check:checked + .btn-outline-primary,
+[data-bs-theme="dark"] .btn-check:active + .btn-outline-primary,
+[data-bs-theme="dark"] .btn-outline-primary:active,
+[data-bs-theme="dark"] .btn-outline-primary.active,
+[data-bs-theme="dark"] .btn-outline-primary.dropdown-toggle.show {
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Các hiệu chỉnh cho dark mode */
+[data-bs-theme="dark"] .accordion-button::after {
+    filter: brightness(2);
+}
+
+[data-bs-theme="dark"] .accordion-button:not(.collapsed)::after {
+    filter: none;
+}
+
+[data-bs-theme="dark"] .card-title,
+[data-bs-theme="dark"] .card-text,
+[data-bs-theme="dark"] .list-group-item {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .bg-body-tertiary {
+    background-color: var(--card-bg) !important;
+}
+
+/* Error image placeholder */
+img.error-image {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+img[src="/images/cover-placeholder.jpg"] {
+    object-fit: contain !important;
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+[data-bs-theme="dark"] img[src="/images/cover-placeholder.jpg"] {
+    background-color: #2c2c2c;
+}
+
+/* Fix for dark mode text color - global */
+[data-bs-theme="dark"] .text-dark,
+[data-bs-theme="dark"] .text-decoration-none.text-dark,
+[data-bs-theme="dark"] a.text-dark:not(.sidebar-nav-link),
+[data-bs-theme="dark"] .card-title a {
+    color: var(--body-color) !important;
+}
+
+/* Fix cho text-muted trong dark mode */
+[data-bs-theme="dark"] .text-muted {
+    color: #a0a0a0 !important;
+}
+
+/* Fix cho icon trong dark mode */
+[data-bs-theme="dark"] .bi {
+    color: inherit;
+}
+
+/* Fix cho navbar trong dark mode */
+[data-bs-theme="dark"] .navbar-dark .navbar-nav .nav-link {
+    color: var(--header-text);
+}
+
+[data-bs-theme="dark"] .navbar-toggler-icon {
+    filter: brightness(2);
+}
+
+.site-header .navbar {
+    padding: 0.5rem 1rem;
+}
+
+/* Header dropdown menu */
+.site-header .dropdown-menu {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.site-header .dropdown-item {
+    color: var(--body-color);
+}
+
+.site-header .dropdown-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.site-header .navbar-nav .nav-link {
+    color: var(--header-text);
+}
+
+/* Search container in header */
+.search-container {
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 20rem;
+}
+
+.search-container.search-expanded {
+    max-width: 45rem;
+}
+
+.search-container form,
+.search-container .input-group {
+    width: 100%;
+}
+
+.search-container .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.search-container .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.mobile-search-container {
+    background-color: var(--body-bg);
+    padding: 0.5rem 1rem;
+}
+
+/* Mobile Search */
+.mobile-search-container .form-control {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+}
+
+/* Fix cho form-control trong dark mode */
+[data-bs-theme="dark"] .form-control {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--primary-color);
+}
+
+[data-bs-theme="dark"] .form-select {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+}
+
+/* Thêm class mới để thay thế btn-outline-light với khả năng đổi màu theo chế độ sáng/tối */
+.btn-theme-outline {
+    color: var(--body-color);
+    border-color: var(--body-color);
+    background-color: transparent;
+}
+
+.btn-theme-outline:hover {
+    color: var(--card-bg);
+    background-color: var(--body-color);
+    border-color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .btn-theme-outline {
+    color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .btn-theme-outline:hover {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+/* Helper class cho phần tử target đang tải HTMX */
+.htmx-loading-target {
+    position: relative; /* Cần thiết cho pseudo-elements */
+    /* KHÔNG đặt min-height để cho phép collapse */
+    transition: none !important; /* Tắt transition khi loading */
+    /* border: 1px dashed var(--border-color); */ /* Bỏ viền nếu không muốn */
+    padding: 3rem 1rem !important; /* Tăng padding để spinner và text có đủ không gian */
+    display: block !important; /* Đảm bảo nó là block */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước ngoài mong đợi */
+    overflow: hidden; /* Ẩn bất kỳ nội dung nào tràn ra ngoài khi collapse */
+}
+
+/* Ẩn nội dung con trực tiếp và loại bỏ khỏi layout */
+.htmx-loading-target > * {
+    display: none !important; /* Gây collapse */
+}
+
+/* Spinner (dùng ::after) */
+.htmx-loading-target::after {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+    /* Căn giữa spinner */
+    top: calc(50% - 1.5rem - 0.5rem); /* (Nửa chiều cao spinner) - (Nửa khoảng cách text) - Điều chỉnh để spinner lên trên */
+    left: calc(50% - 1.5rem);
+    width: 3rem; /* Kích thước spinner */
+    height: 3rem;
+    border: 0.3em solid rgba(var(--primary-rgb, 13, 110, 253), 0.2); /* Viền mờ */
+    border-top-color: var(--primary-color); /* Màu chính */
+    border-radius: 50%;
+    animation: spinner-border .75s linear infinite;
+    z-index: 11;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Text "Đang tải dữ liệu..." (dùng ::before) */
+.htmx-loading-target::before {
+    content: "Đang tải dữ liệu...";
+    position: absolute;
+    box-sizing: border-box;
+    /* Căn giữa text và đặt dưới spinner */
+    top: calc(50% + 1.5rem - 0.5rem); /* (Nửa chiều cao spinner) + (Nửa khoảng cách text) - Điều chỉnh để text xuống dưới */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Giới hạn chiều rộng text để tránh tràn */
+    z-index: 10;
+    color: var(--body-color);
+    font-weight: 500;
+    text-align: center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    padding: 0 0.5rem; /* Thêm padding nhỏ cho text */
+}
+
+/* Keyframes cho spinner */
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+/* Xóa bỏ class ẩn cũ nếu còn */
+.htmx-request-hide {
+   /* Không cần định nghĩa gì ở đây nữa */
+}
