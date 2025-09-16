@@ -1,0 +1,448 @@
+@model MangaReader.WebUI.Models.ViewModels.Manga.MangaDetailViewModel
+@inject ILogger<Program> Logger
+
+@{
+    ViewData["Title"] = Model.Manga?.Title ?? "Chi tiết manga";
+    
+    // LOGGING DỮ LIỆU TẠI VIEW
+    if (Model?.Manga != null)
+    {
+        Logger.LogInformation("[LOGGING - VIEW] Dữ liệu nhận được tại Details.cshtml: Author='{Author}', Artist='{Artist}', Status='{Status}'", 
+            Model.Manga.Author, Model.Manga.Artist, Model.Manga.Status);
+    }
+    else
+    {
+        Logger.LogWarning("[LOGGING - VIEW] Model.Manga là null tại Details.cshtml.");
+    }
+}
+
+<div class="details-manga-header-background" style="background-image: url('@Model.Manga?.CoverUrl')"></div>
+<div class="details-manga-details-container">
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mb-4">@ViewBag.ErrorMessage</div>
+    }
+    
+    @if (Model.Manga != null)
+    {
+        <div class="details-manga-header-container">
+            <div class="details-manga-header">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="detail-manga-cover-container">
+                                <img src="@Model.Manga.CoverUrl" class="detail-manga-cover" alt="@Model.Manga.Title" data-bs-toggle="modal" data-bs-target="#coverModal">
+                            </div>
+                        </div>
+                        <div class="col-md-9 theme-text ps-md-0">
+                            <div class="details-manga-info-row details-manga-info-title">
+                                <h1 class="details-manga-title mb-2">@Model.Manga.Title</h1>
+                                @if (!string.IsNullOrEmpty(Model.Manga.AlternativeTitles))
+                                {
+                                    <p class="details-manga-alt-title mb-3">@Model.Manga.AlternativeTitles</p>
+                                }
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex flex-wrap align-items-center author-artist-row">
+                                        <p class="mb-2 me-4"><strong><i class="bi bi-person-fill me-2"></i>Tác giả:</strong> @Model.Manga.Author</p>
+                                        @if (!string.IsNullOrEmpty(Model.Manga.Artist) && Model.Manga.Artist != Model.Manga.Author)
+                                        {
+                                            <p class="mb-2"><strong><i class="bi bi-brush me-2"></i>Họa sĩ:</strong> @Model.Manga.Artist</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="details-manga-info-row details-manga-info-meta">
+                                <div class="d-flex gap-2 mb-3">
+                                    @if (Model.Chapters.Any())
+                                    {
+                                        var chapters = Model.Chapters.OrderBy(c => c.Number).ToList();
+                                        var vietnameseChapters = chapters.Where(c => c.Language == "vi").ToList();
+                                        var englishChapters = chapters.Where(c => c.Language == "en").ToList();
+                                        
+                                        var firstChapterId = vietnameseChapters.Any() 
+                                            ? vietnameseChapters.First().Id 
+                                            : englishChapters.Any() 
+                                                ? englishChapters.First().Id 
+                                                : chapters.First().Id;
+                                            
+                                        var newestChapters = Model.Chapters.OrderByDescending(c => double.TryParse(c.Number, out var num) ? num : 0).ToList();
+                                        var newestVietnameseChapter = newestChapters.FirstOrDefault(c => c.Language == "vi");
+                                        var newestEnglishChapter = newestChapters.FirstOrDefault(c => c.Language == "en");
+                                        var newestChapterId = newestVietnameseChapter?.Id ?? newestEnglishChapter?.Id ?? newestChapters.First().Id;
+                                        
+                                        <a asp-controller="Chapter" asp-action="Read" asp-route-id="@firstChapterId" class="btn btn-primary"
+                                           hx-get="@Url.Action("Read", "Chapter", new { id = firstChapterId })"
+                                           hx-target="#main-content"
+                                           hx-push-url="true">
+                                            <i class="bi bi-book-fill me-2"></i>Đọc từ đầu
+                                        </a>
+                                        <a asp-controller="Chapter" asp-action="Read" asp-route-id="@newestChapterId" class="btn btn-success"
+                                           hx-get="@Url.Action("Read", "Chapter", new { id = newestChapterId })"
+                                           hx-target="#main-content"
+                                           hx-push-url="true">
+                                            <i class="bi bi-lightning-fill me-2"></i>Đọc mới nhất
+                                        </a>
+                                    }
+                                    
+                                    <button class="btn btn-theme-outline" id="followBtn" data-id="@Model.Manga.Id" data-following="@Model.Manga.IsFollowing.ToString().ToLower()">
+                                        @if (Model.Manga.IsFollowing)
+                                        {
+                                            <i class="bi bi-bookmark-check-fill me-2"></i><span>Đang theo dõi</span>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-bookmark-plus me-2"></i><span>Theo dõi</span>
+                                        }
+                                    </button>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="badge bg-primary me-2">@Model.Manga.Status</span>
+                                    @foreach (var tag in Model.Manga.Tags)
+                                    {
+                                        <span class="badge details-manga-tag me-2 mb-1">@tag</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @if (!string.IsNullOrEmpty(Model.Manga.Description))
+            {
+                <div class="details-manga-description-section">
+                    <div class="container py-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="details-manga-description-container">
+                                    <p class="details-manga-short-description">
+                                        @Model.Manga.Description
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <div class="modal fade" id="coverModal" tabindex="-1" aria-labelledby="coverModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="coverModalLabel">@Model.Manga.Title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="@Model.Manga.CoverUrl" class="img-fluid" alt="@Model.Manga.Title">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mt-4 mb-5 pb-5">
+            <ul class="nav nav-tabs mb-4" id="mangaDetailTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="chapters-tab" data-bs-toggle="tab" data-bs-target="#chapters" type="button" role="tab" aria-controls="chapters" aria-selected="true">
+                        <i class="bi bi-list-ol me-2"></i>Danh sách chương (@Model.Chapters.Count)
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="false">
+                        <i class="bi bi-info-circle me-2"></i>Thông tin chi tiết
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="mangaDetailTabsContent">
+                <div class="tab-pane fade show active" id="chapters" role="tabpanel" aria-labelledby="chapters-tab">
+                    <div class="mb-4">
+                        <div class="custom-language-filter">
+                            <button class="language-filter-btn active" data-lang="all">Tất cả</button>
+                            <button class="language-filter-btn" data-lang="vi">Tiếng Việt</button>
+                            <button class="language-filter-btn" data-lang="en">Tiếng Anh</button>
+                        </div>
+                    </div>
+                    
+                    @{
+                        var chaptersByLanguage = Model.Chapters
+                            .GroupBy(c => c.Language)
+                            .ToDictionary(g => g.Key, g => g.ToList());
+                        
+                        var sortedLanguages = chaptersByLanguage.Keys
+                            .OrderBy(lang => lang == "vi" ? 0 : lang == "en" ? 1 : 2)
+                            .ThenBy(lang => lang)
+                            .ToList();
+                    }
+                    
+                    <div class="custom-chapters-container">
+                        @foreach (var language in sortedLanguages)
+                        {
+                            var langChapters = chaptersByLanguage[language];
+                            var langId = $"lang-{language}";
+                            var newestChapter = langChapters.OrderByDescending(c => {
+                                _ = double.TryParse(c.Number, out var num);
+                                return num;
+                            }).FirstOrDefault();
+                            var newestChapterNumber = newestChapter != null ? newestChapter.Number : "N/A";
+                            var chaptersByVolume = langChapters
+                                .GroupBy(c => c.Volume ?? "Không rõ")
+                                .OrderByDescending(g => 
+                                {
+                                    if (g.Key == "Không rõ") return int.MinValue;
+                                    return int.TryParse(g.Key, out int volNum) ? volNum : int.MinValue;
+                                })
+                                .ToDictionary(g => g.Key, g => g.OrderByDescending(c => {
+                                    _ = double.TryParse(c.Number, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double num);
+                                    return num;
+                                }).ToList());
+                            
+                            <div class="custom-language-section" data-language="@language" id="lang-section-@language">
+                                <div class="custom-language-header" data-lang-id="@langId">
+                                    <div class="custom-language-info">
+                                        <i class="bi bi-translate me-2"></i>
+                                        <span class="fw-bold">@TranslateLanguage(language)</span>
+                                        <span class="badge bg-@(language == "vi" ? "success" : "info") ms-2">@langChapters.Count chương</span>
+                                        <span class="badge bg-primary ms-2">Mới nhất: Chương @newestChapterNumber</span>
+                                    </div>
+                                    <i class="bi bi-chevron-down language-toggle-icon"></i>
+                                </div>
+                                <div class="custom-language-content" id="lang-content-@langId">
+                                    <div class="custom-volumes-container">
+                                        @foreach (var volumeKey in chaptersByVolume.Keys)
+                                        {
+                                            var volumeChapters = chaptersByVolume[volumeKey];
+                                            var volumeIdSafe = $"{langId}-vol-{System.Text.RegularExpressions.Regex.Replace(volumeKey, @"[^a-zA-Z0-9\-_]", "-")}"; 
+                                            var minChapterNum = volumeChapters.LastOrDefault()?.Number ?? "?";
+                                            var maxChapterNum = volumeChapters.FirstOrDefault()?.Number ?? "?";
+                                            
+                                            <div class="custom-volume-dropdown" id="volume-@volumeIdSafe">
+                                                <div class="custom-volume-header" data-volume-id="@volumeIdSafe">
+                                                    <div class="custom-volume-title">
+                                                        <i class="bi bi-journal-bookmark me-2"></i>
+                                                        @(volumeKey == "Không rõ" ? "Tập không rõ" : $"Tập {volumeKey}")
+                                                    </div>
+                                                    <div class="custom-volume-chapters-info">
+                                                        @if (minChapterNum != "?" && maxChapterNum != "?" && minChapterNum != maxChapterNum) {
+                                                            @($"Chương {minChapterNum} - {maxChapterNum}")
+                                                        } else if (maxChapterNum != "?") {
+                                                            @($"Chương {maxChapterNum}")
+                                                        }
+                                                    </div>
+                                                    <i class="bi bi-chevron-down volume-toggle-icon"></i>
+                                                </div>
+                                                <div class="custom-volume-chapters" id="chapters-@volumeIdSafe">
+                                                    @foreach (var chapter in volumeChapters)
+                                                    {
+                                                        <a asp-controller="Chapter" asp-action="Read" 
+                                                           asp-route-id="@chapter.Id"
+                                                           class="custom-chapter-item chapter-link"
+                                                           hx-get="@Url.Action("Read", "Chapter", new { id = chapter.Id })"
+                                                           hx-target="#main-content"
+                                                           hx-push-url="true">
+                                                            <div class="custom-chapter-info">
+                                                                <h6 class="mb-0">@chapter.Title</h6>
+                                                                <small class="text-muted">@chapter.PublishedAt.ToString("dd/MM/yyyy")</small>
+                                                            </div>
+                                                        </a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                    <div class="card details-manga-details-card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Mô tả đầy đủ</h5>
+                            <p class="card-text details-manga-description">@Model.Manga.Description</p>
+                            <h5 class="card-title mt-4 mb-3">Thông tin chi tiết</h5>
+                            <ul class="list-group list-group-flush theme-aware-list">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-person-fill me-2"></i>Tác giả</span>
+                                    <span>@Model.Manga.Author</span>
+                                </li>
+                                @if (!string.IsNullOrEmpty(Model.Manga.Artist) && Model.Manga.Artist != Model.Manga.Author)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="bi bi-brush me-2"></i>Họa sĩ</span>
+                                        <span>@Model.Manga.Artist</span>
+                                    </li>
+                                }
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-flag-fill me-2"></i>Trạng thái</span>
+                                    <span class="badge bg-primary">@Model.Manga.Status</span>
+                                </li>
+                                @if (!string.IsNullOrEmpty(Model.Manga.OriginalLanguage))
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="bi bi-globe me-2"></i>Ngôn ngữ gốc</span>
+                                        <span>@TranslateLanguage(Model.Manga.OriginalLanguage)</span>
+                                    </li>
+                                }
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-translate me-2"></i>Bản dịch có sẵn</span>
+                                    <span>
+                                        @{
+                                            var languages = Model.Chapters.Select(c => c.Language).Distinct().ToList();
+                                            foreach (var lang in languages)
+                                            {
+                                                <span class="badge bg-@(lang == "vi" ? "success" : "info") me-1">@TranslateLanguage(lang)</span>
+                                            }
+                                        }
+                                    </span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-list-ol me-2"></i>Số chương</span>
+                                    <span>@Model.Chapters.Count</span>
+                                </li>
+                                @if (!string.IsNullOrEmpty(Model.Manga.PublicationDemographic))
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="bi bi-people-fill me-2"></i>Đối tượng</span>
+                                        <span>@TranslateDemographic(Model.Manga.PublicationDemographic)</span>
+                                    </li>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.Manga.ContentRating))
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="bi bi-shield-fill me-2"></i>Xếp hạng nội dung</span>
+                                        <span>@TranslateContentRating(Model.Manga.ContentRating)</span>
+                                    </li>
+                                }
+                                @if (Model.Manga.LastUpdated.HasValue)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="bi bi-clock-fill me-2"></i>Cập nhật lần cuối</span>
+                                        <span>@Model.Manga.LastUpdated.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                                    </li>
+                                }
+                            </ul>
+                            <h5 class="card-title mt-4 mb-3">Thể loại</h5>
+                            <div class="details-manga-tags">
+                                @foreach (var tag in Model.Manga.Tags)
+                                {
+                                    <span class="badge details-manga-tag me-2 mb-2">@tag</span>
+                                }
+                            </div>
+                            @if (Model.AlternativeTitlesByLanguage != null && Model.AlternativeTitlesByLanguage.Any())
+                            {
+                                <h5 class="card-title mt-4 mb-3">Tên khác</h5>
+                                <div class="card-text details-manga-alt-titles">
+                                    @{
+                                        var altTitleLangs = Model.AlternativeTitlesByLanguage.Keys
+                                            .OrderBy(lang => lang == "vi" ? 0 : (lang == "en" ? 1 : 2))
+                                            .ThenBy(lang => lang)
+                                            .ToList();
+
+                                        foreach (var lang in altTitleLangs)
+                                        {
+                                            var titles = Model.AlternativeTitlesByLanguage[lang];
+                                            foreach (var title in titles)
+                                            {
+                                                <div class="mb-1 alt-title-item">
+                                                    <span class="alt-title-lang me-2">
+                                                        <i class="bi bi-translate me-1"></i>
+                                                        <strong>@GetLanguageName(lang):</strong>
+                                                    </span>
+                                                    <span>@title</span>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="text-center py-5">
+                <i class="bi bi-emoji-frown display-1 text-muted"></i>
+                <h3 class="mt-3">Không tìm thấy thông tin manga</h3>
+                <p class="text-muted">Manga bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.</p>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3" hx-get="@Url.Action("Index", "Home")" hx-target="#main-content" hx-push-url="true">
+                    <i class="bi bi-house-door me-2"></i>Quay lại trang chủ
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+@functions {
+    public string TranslateStatus(string status)
+    {
+        return status switch
+        {
+            "ongoing" => "Đang tiến hành",
+            "completed" => "Hoàn thành",
+            "hiatus" => "Tạm ngưng",
+            "cancelled" => "Đã hủy",
+            _ => "Không rõ"
+        };
+    }
+    
+    public string TranslateLanguage(string lang)
+    {
+        return lang switch
+        {
+            "vi" => "Tiếng Việt",
+            "en" => "Tiếng Anh",
+            "ja" => "Tiếng Nhật",
+            "zh" => "Tiếng Trung",
+            "ko" => "Tiếng Hàn",
+            "fr" => "Tiếng Pháp",
+            "es" => "Tiếng Tây Ban Nha",
+            "de" => "Tiếng Đức",
+            "it" => "Tiếng Ý",
+            "ru" => "Tiếng Nga",
+            "pt-br" => "Tiếng Bồ Đào Nha (Brazil)",
+            "id" => "Tiếng Indonesia",
+            "th" => "Tiếng Thái",
+            "unknown" => "Không rõ ngôn ngữ",
+            "additionalProp1" => "Ngôn ngữ khác (1)",
+            "additionalProp2" => "Ngôn ngữ khác (2)",
+            "additionalProp3" => "Ngôn ngữ khác (3)",
+            _ => lang?.ToUpper() ?? "Không rõ"
+        };
+    }
+    
+    public string GetLanguageName(string langCode)
+    {
+        return TranslateLanguage(langCode);
+    }
+    
+    public string TranslateDemographic(string demographic)
+    {
+        return demographic switch
+        {
+            "shounen" => "Shounen (Nam thiếu niên)",
+            "shoujo" => "Shoujo (Nữ thiếu niên)",
+            "seinen" => "Seinen (Nam thanh niên)",
+            "josei" => "Josei (Nữ thanh niên)",
+            _ => demographic
+        };
+    }
+    
+    public string TranslateContentRating(string rating)
+    {
+        return rating switch
+        {
+            "safe" => "An toàn",
+            "suggestive" => "Gợi cảm",
+            "erotica" => "Khiêu dâm",
+            "pornographic" => "Người lớn",
+            _ => rating
+        };
+    }
+} 
