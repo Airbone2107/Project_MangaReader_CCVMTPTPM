@@ -1,0 +1,97 @@
+@model MangaReader.WebUI.Models.ViewModels.Chapter.ChapterReadViewModel
+@{
+    ViewData["Title"] = $"{Model.MangaTitle} - Chapter {Model.ChapterNumber}";
+    ViewData["PageType"] = "chapter-read";
+}
+
+<div class="chapter-reader-container">
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mb-4">@ViewBag.ErrorMessage</div>
+    }
+    
+    <div class="chapter-header">
+        <h1 class="manga-title">@Model.MangaTitle</h1>
+        
+        <div class="chapter-info-row">
+            <div class="chapter-number">
+                <span>Chương @Model.ChapterNumber</span>
+            </div>
+            <div class="chapter-title">
+                <h2>@Model.ChapterTitle</h2>
+            </div>
+            <div class="chapter-controls" id="readingSidebarToggle">
+                Menu
+            </div>
+        </div>
+    </div>
+    
+    <div id="chapterImagesContainer" class="chapter-images-container" 
+         hx-trigger="load" 
+         hx-get="@Url.Action("GetChapterImagesPartial", "Chapter", new { id = Model.ChapterId })">
+        <div class="text-center p-5">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+            </div>
+            <p>Đang tải nội dung chương...</p>
+        </div>
+    </div>
+    
+    <div class="chapter-footer">
+        <div class="nav-buttons">
+            @if (!string.IsNullOrEmpty(Model.PrevChapterId))
+            {
+                <a hx-get="@Url.Action("Read", "Chapter", new { id = Model.PrevChapterId })" 
+                   hx-target="#main-content" 
+                   hx-push-url="true"
+                   class="btn btn-theme-outline">
+                    <i class="bi bi-chevron-left"></i> Chương trước
+                </a>
+            }
+            
+            <a asp-controller="Manga" asp-action="Details" asp-route-id="@Model.MangaId" 
+               class="btn btn-theme-outline"
+               hx-get="@Url.Action("Details", "Manga", new { id = Model.MangaId })"
+               hx-target="#main-content"
+               hx-push-url="true">
+                <i class="bi bi-grid"></i> Danh sách chương
+            </a>
+            
+            @if (!string.IsNullOrEmpty(Model.NextChapterId))
+            {
+                <a hx-get="@Url.Action("Read", "Chapter", new { id = Model.NextChapterId })" 
+                   hx-target="#main-content" 
+                   hx-push-url="true"
+                   class="btn btn-theme-outline">
+                    Chương tiếp theo <i class="bi bi-arrow-right"></i>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<partial name="_ReadingSidebarPartial" model="Model" />
+
+@functions {
+    public string TranslateLanguage(string lang)
+    {
+        return lang switch
+        {
+            "vi" => "Tiếng Việt",
+            "en" => "Tiếng Anh",
+            "ja" => "Tiếng Nhật",
+            "zh" => "Tiếng Trung",
+            "ko" => "Tiếng Hàn",
+            _ => lang?.ToUpper() ?? "Không rõ"
+        };
+    }
+} 
+
+<div hx-post="@Url.Action("SaveReadingProgress", "Chapter")"
+     hx-trigger="load"
+     hx-vals='{"mangaId": "@Model.MangaId", "chapterId": "@Model.ChapterId"}'
+     hx-swap="none"
+     aria-hidden="true"
+     style="display: none;">
+     <!-- Trigger lưu tiến độ đọc -->
+</div> 
