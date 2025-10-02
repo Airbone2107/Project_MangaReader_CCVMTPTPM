@@ -1,15 +1,15 @@
-﻿@{
+﻿@model MangaReader.WebUI.Models.ViewModels.Shared.ErrorViewModel
+@{
     ViewData["Title"] = "Error";
-    var showRequestId = !string.IsNullOrEmpty(ViewData["RequestId"] as string);
 }
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
-@if (showRequestId)
+@if (Model.ShowRequestId)
 {
     <p>
-        <strong>Request ID:</strong> <code>@ViewData["RequestId"]</code>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
 }
 
