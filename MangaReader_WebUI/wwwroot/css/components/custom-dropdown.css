@@ -1,0 +1,276 @@
+/**
+ * Custom User Dropdown Style
+ * Thay thế Bootstrap dropdown bằng custom CSS sử dụng CSS variables cho theme awareness
+ */
+
+/* Container chính */
+.custom-user-dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 1020;
+}
+
+/* Nút toggle dropdown */
+.dropdown-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: transparent;
+    color: var(--navbar-color, #fff);
+    border: none;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+    width: auto;
+    min-width: fit-content;
+}
+
+.dropdown-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Icon người dùng */
+.user-icon {
+    font-size: 1.25rem;
+    margin-right: 0.25rem;
+}
+
+/* Tên người dùng */
+.user-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: none;
+    display: inline-block;
+    margin-right: 0.25rem;
+}
+
+/* Arrow icon */
+.dropdown-arrow-icon {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+/* Arrow icon khi dropdown mở */
+.custom-user-dropdown.show .dropdown-arrow-icon {
+    transform: rotate(180deg);
+}
+
+/* Menu dropdown */
+.dropdown-menu-content {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    background-color: var(--dropdown-bg, #fff);
+    min-width: 200px;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+    display: none;
+    border: 1px solid var(--dropdown-border, rgba(0, 0, 0, 0.1));
+    z-index: 1021;
+}
+
+.dropdown-menu-content .custom-dropdown-item {
+    display: flex;
+    justify-content: center;
+}
+
+/* Menu dropdown khi hiển thị */
+.custom-user-dropdown.show .dropdown-menu-content {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+/* Dropdown item */
+.dropdown-item {
+    display: block;
+    width: 100%;
+    clear: both;
+    font-weight: 400;
+    color: var(--body-color, #212529);
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.dropdown-item:hover, 
+.dropdown-item:focus {
+    background-color: var(--hover-bg, rgba(0, 0, 0, 0.05));
+    text-decoration: none;
+}
+
+/* Dropdown divider */
+.dropdown-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--dropdown-border, rgba(0, 0, 0, 0.1));
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Theme support - Dark mode overrides */
+html[data-bs-theme="dark"] .dropdown-menu-content {
+    background-color: var(--dropdown-bg, #343a40);
+    border-color: var(--dropdown-border, rgba(255, 255, 255, 0.1));
+}
+
+html[data-bs-theme="dark"] .dropdown-item {
+    color: var(--body-color, #f8f9fa);
+}
+
+html[data-bs-theme="dark"] .dropdown-item:hover,
+html[data-bs-theme="dark"] .dropdown-item:focus {
+    background-color: var(--hover-bg, rgba(255, 255, 255, 0.1));
+}
+
+html[data-bs-theme="dark"] .dropdown-divider {
+    border-color: var(--dropdown-border, rgba(255, 255, 255, 0.1));
+}
+
+/* --- Custom Theme Switcher --- */
+.custom-theme-switcher {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; /* Quan trọng: làm cho toàn bộ item có thể click */
+    user-select: none; /* Ngăn chọn text khi click */
+    padding: 0.5rem 1rem; /* Thêm padding giống dropdown-item */
+}
+
+.custom-theme-switcher:hover,
+.custom-theme-switcher:focus {
+    /* Giữ nguyên style hover của dropdown-item */
+    background-color: var(--hover-bg, rgba(0, 0, 0, 0.05));
+    color: var(--body-color, #212529); /* Đảm bảo màu chữ không bị ảnh hưởng quá nhiều */
+}
+
+html[data-bs-theme="dark"] .custom-theme-switcher:hover,
+html[data-bs-theme="dark"] .custom-theme-switcher:focus {
+    background-color: var(--hover-bg, rgba(255, 255, 255, 0.1));
+}
+
+
+/* Phần text và icon */
+#customThemeSwitcherText {
+    display: inline-flex; /* Để icon và text thẳng hàng */
+    align-items: center;
+}
+
+/* Phần switch toggle trực quan */
+.custom-theme-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px; /* Chiều rộng của switch */
+    height: 20px; /* Chiều cao của switch */
+    background-color: #ccc; /* Màu nền khi tắt (sáng) */
+    border-radius: 20px; /* Bo tròn */
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; /* Ngăn không bị co lại */
+    margin-left: 20px; /* Đẩy về bên phải */
+}
+
+
+.custom-theme-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 2px; /* Căn giữa theo chiều dọc */
+    left: 2px; /* Vị trí ban đầu (tắt) */
+    width: 16px; /* Chiều rộng núm trượt */
+    height: 16px; /* Chiều cao núm trượt */
+    background-color: white;
+    border-radius: 50%; /* Bo tròn thành hình tròn */
+    transition: transform 0.3s ease;
+}
+
+/* Trạng thái bật (dark mode) */
+.custom-theme-switcher.dark-mode .custom-theme-toggle-switch {
+    background-color: var(--primary-color, #0d6efd); /* Màu nền khi bật (tối) */
+}
+
+.custom-theme-switcher.dark-mode .custom-theme-toggle-slider {
+    transform: translateX(20px); /* Di chuyển núm trượt sang phải */
+}
+
+/* Điều chỉnh màu nền switch cho theme tối */
+html[data-bs-theme="dark"] .custom-theme-toggle-switch {
+    background-color: #555; /* Màu nền tối hơn khi tắt trong dark mode */
+}
+
+/* --- Custom Source Switcher --- */
+.custom-source-switcher {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem 1rem;
+}
+
+.custom-source-switcher:hover,
+.custom-source-switcher:focus {
+    background-color: var(--hover-bg, rgba(0, 0, 0, 0.05));
+    color: var(--body-color, #212529);
+}
+
+html[data-bs-theme="dark"] .custom-source-switcher:hover,
+html[data-bs-theme="dark"] .custom-source-switcher:focus {
+    background-color: var(--hover-bg, rgba(255, 255, 255, 0.1));
+}
+
+/* Phần text và icon */
+#customSourceSwitcherText {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Phần switch toggle trực quan */
+.custom-source-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc; /* Màu nền khi MangaDex (mặc định) */
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 20px;
+}
+
+.custom-source-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+/* Trạng thái bật (MangaReaderLib) */
+.custom-source-switcher.mangareader-source .custom-source-toggle-switch {
+    background-color: var(--primary-color, #0d6efd); /* Màu khi là MangaReaderLib */
+}
+
+.custom-source-switcher.mangareader-source .custom-source-toggle-slider {
+    transform: translateX(20px);
+}
+
+/* Điều chỉnh màu nền switch cho theme tối */
+html[data-bs-theme="dark"] .custom-source-toggle-switch {
+    background-color: #555;
+}

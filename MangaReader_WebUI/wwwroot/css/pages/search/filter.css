@@ -1,0 +1,314 @@
+/* Search Filter Dropdown Styling */
+.search-filter-dropdown {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.filter-toggle {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    background-color: var(--filter-toggle-bg);
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid var(--filter-toggle-border);
+}
+
+.filter-menu {
+    position: static;
+    width: 100%;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.custom-dropdown.show .filter-menu {
+    display: block;
+}
+
+.filter-content {
+    background-color: var(--filter-content-bg);
+    border: 1px solid var(--filter-content-border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Animation khi hiển thị filter-menu */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style đặc biệt khi filter dropdown đang mở */
+.custom-dropdown.search-filter-dropdown.show {
+    margin-bottom: 0;
+}
+
+/* Style cho filter menu */
+.search-filter-dropdown .filter-menu {
+    margin-bottom: 0;
+}
+
+/* Filter Styling */
+#filterToggle {
+    transition: all 0.3s ease;
+    border-color: var(--filter-toggle-border);
+    color: var(--body-color);
+    background-color: var(--filter-toggle-bg);
+    border: 1px solid var(--filter-toggle-border);
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#filterToggle:hover {
+    border-color: var(--primary-color);
+}
+
+#filterToggle .chevron-icon {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transition: transform 0.3s ease;
+}
+
+#filterToggle.active .chevron-icon {
+    transform: rotate(180deg);
+}
+
+.filter-content {
+    transition: all 0.3s ease;
+    background-color: var(--filter-content-bg);
+    border-color: var(--filter-content-border);
+}
+
+/* ===== FILTER DROPDOWN STYLING (Không sử dụng Bootstrap) ===== */
+
+/* Phần Container */
+.filter-dropdown {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    font-family: inherit;
+}
+
+/* Nhãn trên dropdown */
+.filter-dropdown-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--body-color);
+}
+
+/* Nút toggle */
+.filter-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--filter-toggle-bg);
+    border: 1px solid var(--filter-toggle-border);
+    border-radius: 0.375rem;
+    color: var(--body-color);
+    font-weight: normal;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.filter-toggle-btn:hover {
+    border-color: var(--primary-color);
+}
+
+.filter-toggle-btn:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25);
+}
+
+/* Phần văn bản đã chọn */
+.filter-toggle-btn .selected-text {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 20px); /* Trừ đi khoảng cách cho icon */
+    padding-right: 0.5rem;
+    display: inline-block; /* Đảm bảo text overflow hoạt động */
+    min-width: 0; /* Cần thiết để text overflow hoạt động với flexbox */
+}
+
+/* Icon mũi tên */
+.filter-toggle-btn .toggle-icon {
+    width: 0.8em;
+    height: 0.8em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transition: transform 0.3s ease;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* Active state for arrow */
+.filter-dropdown.show .filter-toggle-btn .toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Menu dropdown */
+.filter-menu-content {
+    display: none;
+    width: 100%;
+    background-color: var(--dropdown-bg);
+    border: 1px solid var(--dropdown-border);
+    border-radius: 0.375rem;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0;
+    animation: fadeIn 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1050;
+}
+
+/* Show state */
+.filter-dropdown.show .filter-menu-content {
+    display: block;
+}
+
+/* Animation khi hiển thị filter-menu-content */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Padding cho nội dung dropdown */
+.filter-menu-padding {
+    padding: 0.5rem 1rem;
+}
+
+/* Style cho các checkbox/radio options */
+.filter-option {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    margin: 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.filter-option:last-child {
+    border-bottom: none;
+}
+
+.filter-option:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+}
+
+.filter-option input[type="checkbox"],
+.filter-option input[type="radio"] {
+    margin-right: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.filter-check-input {
+    margin-right: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.filter-option-label {
+    cursor: pointer;
+    user-select: none;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+
+/* Thêm một pseudo-element để đảm bảo toàn bộ vùng có thể click */
+.filter-option::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+/* Checked state */
+.filter-option input:checked + .filter-option-label {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* ===== BUTTONS STYLING ===== */
+
+/* Nút reset filter */
+.filter-reset-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--body-color);
+    background-color: var(--filter-toggle-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-reset-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Nút áp dụng filter */
+.filter-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-apply-btn:hover {
+    background-color: var(--mangadex-blue-dark);
+    border-color: var(--mangadex-blue-dark);
+} 

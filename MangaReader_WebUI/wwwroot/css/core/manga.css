@@ -1,0 +1,228 @@
+/* Manga CSS - Chứa các styles liên quan đến manga và chapter */
+
+/* Style cho cover manga trên trang danh sách (Index, Search) */
+.card-manga-cover-link {
+    position: relative;
+    display: block;
+    height: 230px;
+    overflow: hidden;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.card-manga-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-manga-cover-link:hover .card-manga-cover {
+    transform: scale(1.05);
+}
+
+/* Style cho cover manga trên trang chi tiết */
+.detail-manga-cover-container {
+    position: relative;
+    max-width: 200px;
+    margin: auto;
+    border-radius: 0.5rem;
+}
+
+.detail-manga-cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.detail-manga-cover:hover {
+    transform: scale(1.03);
+}
+
+/* Badge trạng thái manga */
+.manga-status {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.75rem;
+}
+
+/* Chapter list accordion */
+.chapters-container {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2rem;
+}
+
+.chapters-container .accordion-button:not(.collapsed) {
+    background-color: rgba(13, 110, 253, 0.1);
+    z-index: 3;
+}
+
+.chapters-container .accordion-button:focus {
+    box-shadow: none;
+}
+
+.chapters-container .list-group-item-action:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.chapters-container .accordion-body .accordion-item {
+    border-left: none;
+    border-right: none;
+    margin-bottom: 2px;
+    overflow: visible; /* Ensure content is not clipped */
+}
+
+.chapters-container .accordion-body .accordion-item:first-of-type {
+    border-top: none;
+}
+
+.chapters-container .accordion-body .accordion-button {
+    padding-left: 2rem;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Fix for tabs in manga details page */
+.nav-tabs .nav-link {
+    color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+/* Fix cho chapter và volume title trong dark mode */
+[data-bs-theme="dark"] .chapters-container h6.mb-0 {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .list-group-item-action .text-muted {
+    color: #adb5bd !important;
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link.active {
+    color: var(--primary-color);
+}
+
+[data-bs-theme="dark"] .accordion-button .bi,
+[data-bs-theme="dark"] .accordion-button {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .chapter-lang-item h2.accordion-header button {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .accordion-button.collapsed {
+    color: var(--body-color);
+    background-color: var(--card-bg);
+}
+
+[data-bs-theme="dark"] .chapter-title {
+    color: var(--body-color);
+}
+
+/* Đảm bảo footer không che lấp nội dung */
+.manga-details-container footer {
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+/* Thêm khoảng cách cuối trang */
+.manga-details-container .tab-content {
+    margin-bottom: 30px;
+}
+
+/* Featured manga section on home page */
+.featured-manga {
+    position: relative;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.featured-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%);
+    color: white;
+}
+
+/* Manga card grid */
+.manga-card-grid {
+    --bs-gutter-x: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+/* MediaQueries for responsive manga display */
+@media (max-width: 767.98px) {
+    .featured-manga {
+        height: 250px;
+    }
+    
+    .featured-overlay h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .featured-manga {
+        height: 200px;
+    }
+}
+
+/* Button in chapter list */
+.list-group-item-action .btn-primary {
+    transition: all 0.2s ease;
+}
+
+.list-group-item-action:hover .btn-primary {
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+
+/* Dark mode adjustments cho accordion trong trang manga details */
+[data-bs-theme="dark"] .chapters-container .accordion-body .accordion-button {
+    background-color: #333;
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .chapters-container .accordion-body .accordion-button.collapsed {
+    background-color: #2b2b2b;
+    color: var(--body-color);
+}
+
+/* Thêm các quy tắc mới để đảm bảo văn bản trong các chương và tập hiển thị đúng */
+[data-bs-theme="dark"] .list-group-item h6,
+[data-bs-theme="dark"] .chapters-container h6,
+[data-bs-theme="dark"] .accordion-button,
+[data-bs-theme="dark"] .accordion-header {
+    color: var(--body-color);
+}
+
+/* Đảm bảo rằng các tên ngôn ngữ, tập và chương hiển thị đúng trong dark mode */
+[data-bs-theme="dark"] .list-group-item-action div h6 {
+    color: var(--body-color) !important;
+}
+
+[data-bs-theme="light"] .chapters-container .accordion-body .accordion-button {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+[data-bs-theme="light"] .chapters-container .accordion-body .accordion-button.collapsed {
+    background-color: rgba(0, 0, 0, 0.02);
+} 

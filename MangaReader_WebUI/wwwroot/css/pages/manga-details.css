@@ -1,0 +1,871 @@
+/* Manga Details CSS - Styles đặc thù cho trang chi tiết manga */
+
+/* Container chính */
+.details-manga-details-container {
+    position: relative;
+}
+
+/* Phần tiêu đề manga */
+.details-manga-title-section {
+    margin-bottom: 1.5rem;
+}
+
+/* Wrapper bao ảnh bìa manga */
+.details-manga-cover-wrapper {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+}
+
+/* Ảnh bìa manga */
+.details-manga-cover-img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hiển thị đánh giá */
+.details-manga-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #FFD700;
+}
+
+.details-manga-rating .bi-star-fill,
+.details-manga-rating .bi-star-half,
+.details-manga-rating .bi-star {
+    color: #FFD700;
+    margin-right: 0.25rem;
+}
+
+/* Tiêu đề manga */
+.details-manga-title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    line-height: 1.2;
+    max-height: calc(1.2em * 2); /* Giới hạn chiều cao tương đương 2 dòng */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn số dòng */
+    -webkit-box-orient: vertical;
+    transition: font-size 0.2s ease;
+}
+
+/* Class hỗ trợ việc giảm kích thước chữ tự động */
+.details-manga-title.title-size-adjusted {
+    /* Kích thước chữ sẽ được điều chỉnh bằng JavaScript */
+}
+
+/* Class để theo dõi quá trình điều chỉnh */
+.details-manga-title.title-adjusting {
+    opacity: 0.9;
+}
+
+/* Tiêu đề phụ */
+.details-manga-alt-title {
+    font-size: 1.5rem;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    opacity: 0.9;
+    margin-top: -0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    font-weight: 500;
+}
+
+/* Dòng hiển thị tác giả và họa sĩ */
+.author-artist-row {
+    margin-bottom: 0.5rem;
+}
+
+.author-artist-row p, .publisher-info {
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Phần thông tin tác giả */
+.details-manga-creators {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+/* Nút hành động */
+.details-manga-actions .btn {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+}
+
+/* Nút bắt đầu đọc */
+.btn-reading {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.btn-reading:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Nút tiếp tục đọc */
+.btn-continue-reading {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+}
+
+.btn-continue-reading:hover {
+    background-color: var(--success-dark);
+    transform: translateY(-2px);
+}
+
+/* Nút thêm vào danh sách */
+.btn-add-list {
+    background-color: transparent;
+    color: var(--dark-color);
+    border: 1px solid var(--dark-color);
+}
+
+.btn-add-list:hover, .btn-add-list.active {
+    background-color: var(--dark-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+[data-bs-theme="dark"] .btn-add-list:hover,
+[data-bs-theme="dark"] .btn-add-list.active {
+    background-color: #f8f9fa;
+    color: #212529;
+    border-color: #f8f9fa;
+}
+
+/* Thống kê manga */
+.details-manga-stats {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.details-manga-stat {
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Tags manga */
+.details-manga-tags {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.details-manga-tag {
+    background-color: var(--tag-bg);
+    color: var(--tag-color);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.details-manga-tag:hover {
+    background-color: var(--tag-hover-bg);
+    color: var(--tag-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề các phần */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--title-color);
+}
+
+/* Cards */
+.details-manga-description-card, 
+.details-manga-info-card, 
+.details-manga-alt-titles-card {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1.5rem;
+}
+
+/* Nội dung mô tả manga */
+.details-manga-description-content p {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Phần danh sách chương */
+.chapters-section {
+    margin-top: 2rem;
+}
+
+/* Badges cho trạng thái chapter */
+.badge.bg-pink {
+    background-color: #e83e8c;
+    color: white;
+}
+
+.badge.bg-purple {
+    background-color: #6f42c1;
+    color: white;
+}
+
+[data-bs-theme="dark"] .badge.bg-pink {
+    background-color: #e83e8c;
+    color: white;
+}
+
+[data-bs-theme="dark"] .badge.bg-purple {
+    background-color: #6f42c1;
+    color: white;
+}
+
+[data-bs-theme="dark"] .badge.bg-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+[data-bs-theme="dark"] .badge.bg-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+[data-bs-theme="dark"] .badge.bg-success {
+    background-color: #28a745;
+    color: white;
+}
+
+[data-bs-theme="dark"] .badge.bg-dark {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Băng thông báo trạng thái */
+.badge.bg-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.badge.bg-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+/* Badge riêng */
+.badge.bg-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Cải thiện cho list group trong dark mode */
+.theme-aware-list .list-group-item {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.theme-aware-list .list-group-item:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Accordion trong dark mode */
+.theme-aware-accordion .accordion-button {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-color: var(--border-color);
+}
+
+.theme-aware-accordion .accordion-button:hover:not(.collapsed) {
+    color: var(--primary-color);
+}
+
+.theme-aware-accordion .accordion-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.theme-aware-accordion .accordion-button:not(.collapsed) {
+    background-color: var(--active-bg);
+    color: var(--primary-color);
+}
+
+/* Tên thay thế manga */
+.alt-titles-content {
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .details-manga-title {
+        font-size: 1.5rem;
+    }
+    
+    .details-manga-alt-title {
+        font-size: 1rem;
+    }
+    
+    .details-manga-cover-wrapper {
+        margin-bottom: 1rem;
+    }
+    
+    .details-manga-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Card cho thông tin chi tiết */
+.details-manga-details-card {
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+/* Fixes cho card trong dark mode */
+[data-bs-theme="dark"] .card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .card-body {
+    background-color: var(--card-bg);
+}
+
+[data-bs-theme="dark"] .card-title {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .card-text {
+    color: var(--body-color);
+}
+
+/* Danh sách trong dark mode */
+[data-bs-theme="dark"] .list-group-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .list-group-item-action:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Badge trong dark mode */
+[data-bs-theme="dark"] .badge.bg-secondary {
+    background-color: #6c757d;
+}
+
+[data-bs-theme="dark"] .badge.bg-info {
+    background-color: #17a2b8;
+}
+
+/* Tag manga */
+.details-manga-tag {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+[data-bs-theme="dark"] .details-manga-tag {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+/* Mô tả manga */
+.details-manga-description {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+/* Container phần header */
+.details-manga-header-container {
+    width: 100%;
+    position: relative;
+    background: transparent;
+}
+
+/* Background image div */
+.details-manga-header-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transition: height 0.3s ease;
+    opacity: 0.35;
+}
+
+/* Manga header */
+.details-manga-header {
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+}
+
+[data-bs-theme="dark"] .details-manga-header {
+    background-color: transparent;
+}
+
+[data-bs-theme="light"] .details-manga-header {
+    background-color: transparent;
+}
+
+/* Manga description section */
+.details-manga-description-section {
+    background-color: transparent;
+}
+
+[data-bs-theme="dark"] .details-manga-description-section {
+    background-color: transparent;
+}
+
+/* Manga short description */
+.details-manga-short-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: justify;
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .details-manga-short-description {
+    color: var(--body-color);
+}
+
+.details-manga-description-container {
+    padding: 1.5rem;
+}
+
+/* Info row */
+.details-manga-info-row {
+    margin-bottom: 1.5rem;
+}
+
+/* Manga metadata */
+.details-manga-info-meta {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+}
+
+/* Manga cover container */
+.details-manga-cover-container {
+    position: relative;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+/* Manga cover */
+.details-manga-cover {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.details-manga-cover:hover {
+    transform: scale(1.02);
+}
+
+/* Manga rating display */
+.details-manga-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #FFD700;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Manga alt titles */
+.details-manga-alt-titles {
+    margin-bottom: 1.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Mỗi mục tiêu đề phụ */
+.alt-title-item {
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+}
+
+.alt-title-item:hover {
+    background-color: var(--hover-bg);
+    transform: translateX(3px);
+}
+
+/* Icon trong mục tiêu đề phụ */
+.alt-title-item .bi {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+[data-bs-theme="dark"] .alt-title-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .alt-title-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-bs-theme="dark"] .alt-title-item .bi {
+    color: var(--primary-light);
+}
+
+/* Nav tabs trong chế độ tối */
+[data-bs-theme="dark"] .nav-tabs {
+    border-color: var(--border-color);
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link {
+    color: var(--body-color);
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link.active {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border-color: var(--border-color) var(--border-color) var(--card-bg);
+}
+
+/* Nút theo dõi trong chế độ tối */
+[data-bs-theme="dark"] .btn-outline-light {
+    color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .btn-outline-light:hover {
+    background-color: rgba(248, 249, 250, 0.1);
+    color: #f8f9fa;
+}
+
+/* Cải thiện màu văn bản cho small.text-muted */
+[data-bs-theme="dark"] .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Cải thiện màu cho các nút trong thẻ chapter */
+[data-bs-theme="dark"] .list-group-item .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+[data-bs-theme="dark"] .list-group-item .btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Thông báo lỗi */
+[data-bs-theme="dark"] .alert-danger {
+    background-color: #842029;
+    color: #fff;
+    border-color: #842029;
+}
+
+/* Phần ngôn ngữ trong tiêu đề phụ */
+.alt-title-lang {
+    min-width: 140px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.alt-title-lang .bi {
+    color: var(--primary-color);
+}
+
+/* CSS cho dropdown tùy chỉnh */
+.custom-language-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.language-filter-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--bs-primary);
+    background-color: transparent;
+    color: var(--bs-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.language-filter-btn.active {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+.language-filter-btn:hover:not(.active) {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* CSS cho các thành phần không có background */
+.custom-chapters-container {
+    width: 100%;
+    background-color: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.custom-language-section {
+    margin-bottom: 0;
+    border-radius: 0;
+    overflow: hidden;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.custom-language-section:last-child {
+    border-bottom: none;
+}
+
+[data-bs-theme="light"] .custom-language-section {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+    background-color: transparent;
+}
+
+/* CSS cho language header */
+.custom-language-header {
+    background-color: transparent;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+    position: relative;
+    border-radius: 0;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="light"] .custom-language-header {
+    background-color: transparent;
+    color: #212529;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.custom-language-header.active {
+    border-bottom: none;
+}
+
+.custom-language-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.custom-language-info .fw-bold {
+    font-size: 1.1rem;
+    color: #ffffff;
+}
+
+[data-bs-theme="light"] .custom-language-info .fw-bold {
+    color: #212529;
+}
+
+.language-toggle-icon {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+}
+
+.custom-language-header.active .language-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Đảm bảo content của language không có background */
+.custom-language-content {
+    display: none;
+    background-color: transparent;
+}
+
+.custom-language-header.active + .custom-language-content {
+    display: block !important;
+}
+
+[data-bs-theme="light"] .custom-language-content {
+    background-color: transparent;
+}
+
+.custom-volumes-container {
+    padding: 0;
+    background-color: transparent;
+}
+
+.custom-volume-dropdown {
+    margin-bottom: 0;
+    background-color: transparent;
+    border-bottom: none;
+}
+
+.custom-volume-dropdown:last-child {
+    border-bottom: none;
+}
+
+[data-bs-theme="light"] .custom-volume-dropdown {
+    background-color: transparent;
+    border-bottom: none;
+}
+
+/* CSS cho volume header */
+.custom-volume-header {
+    padding: 12px 16px;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="light"] .custom-volume-header {
+    background-color: transparent;
+    color: #212529;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.custom-volume-header.active {
+    border-bottom: none;
+}
+
+.custom-volume-title {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    font-weight: 500;
+    color: #e9ecef;
+}
+
+[data-bs-theme="light"] .custom-volume-title {
+    color: #343a40;
+}
+
+/* Style cho thông tin chương */
+.custom-volume-chapters-info {
+    flex: 0 1 auto;
+    text-align: center;
+    color: #adb5bd;
+    font-size: 0.9rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    pointer-events: none; /* Cho phép click xuyên qua để không cản trở việc click vào header */
+}
+
+[data-bs-theme="light"] .custom-volume-chapters-info {
+    color: #6c757d;
+}
+
+.volume-toggle-icon {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+}
+
+.custom-volume-header.active .volume-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Đảm bảo volume chapters không có background */
+.custom-volume-chapters {
+    display: none;
+    background-color: transparent;
+    padding-bottom: 8px; /* Thêm padding dưới để tạo khoảng cách thay vì border */
+}
+
+.custom-volume-header.active + .custom-volume-chapters {
+    display: block !important;
+}
+
+[data-bs-theme="light"] .custom-volume-chapters {
+    background-color: transparent;
+}
+
+/* Chỉ custom-chapter-item có background */
+.custom-chapter-item {
+    padding: 12px 16px 12px 24px;
+    border: none; /* Loại bỏ border-bottom */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(26, 29, 32, 0.6);
+    margin: 4px 0;
+    border-radius: 4px;
+    cursor: pointer; /* Thêm cursor pointer để hiển thị item có thể click */
+    transition: all 0.2s ease;
+}
+
+[data-bs-theme="light"] .custom-chapter-item {
+    background-color: rgba(248, 249, 250, 0.6);
+}
+
+.custom-chapter-item:last-child {
+    border-bottom: none;
+}
+
+.custom-chapter-info {
+    flex: 1;
+}
+
+.custom-chapter-item:hover {
+    background-color: rgba(44, 48, 52, 0.8);
+    transform: translateY(-2px); /* Thêm hiệu ứng nâng lên khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng khi hover */
+}
+
+[data-bs-theme="light"] .custom-chapter-item:hover {
+    background-color: rgba(241, 243, 245, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm style cho custom-chapter-item khi là liên kết */
+.custom-chapter-item.chapter-link {
+    text-decoration: none; /* Loại bỏ gạch chân mặc định của link */
+    color: inherit; /* Giữ màu chữ như ban đầu */
+    display: flex;
+    width: 100%;
+}
