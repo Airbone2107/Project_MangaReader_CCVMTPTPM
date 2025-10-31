@@ -1,0 +1,100 @@
+@model MangaReader.WebUI.Models.ViewModels.Chapter.ChapterReadViewModel
+
+<div id="readingSidebar" class="reading-sidebar">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <button class="btn-close theme-text" id="closeSidebarBtn" aria-label="Close"></button>
+        <button class="btn btn-sm btn-theme-outline" id="pinSidebarBtn" aria-label="Pin sidebar">
+            <i class="bi bi-pin"></i>
+        </button>
+    </div>
+    
+    <div class="sidebar-section">
+        <h6>Điều hướng</h6>
+        <div class="nav-item mb-3">
+            <a asp-controller="Manga" asp-action="Details" asp-route-id="@Model.MangaId"
+               class="btn btn-theme-outline w-100"
+               hx-get="@Url.Action("Details", "Manga", new { id = Model.MangaId })"
+               hx-target="#main-content"
+               hx-push-url="true"
+               title="Quay về trang chi tiết manga">
+                <i class="bi bi-list-stars me-2"></i> Danh sách chương
+            </a>
+        </div>
+    </div>
+    
+    <div class="sidebar-section">
+        <h6>Chương</h6>
+        <div class="chapter-navigation mb-3">
+            <div class="d-flex justify-content-between align-items-stretch gap-2 mb-3">
+                @if (!string.IsNullOrEmpty(Model.PrevChapterId))
+                {
+                    <a hx-get="@Url.Action("Read", "Chapter", new { id = Model.PrevChapterId })" 
+                       hx-target="#main-content" 
+                       hx-push-url="true"
+                       class="btn btn-theme-outline chapter-nav-button">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-theme-outline chapter-nav-button" disabled>
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                }
+                
+                <select id="chapterSelect" class="form-select">
+                    @if (Model.SiblingChapters != null && Model.SiblingChapters.Any())
+                    {
+                        @foreach (var chapter in Model.SiblingChapters)
+                        {
+                            @if (chapter.Id == Model.ChapterId)
+                            {
+                                <option value="@chapter.Id" selected>
+                                    @(string.IsNullOrEmpty(chapter.Number) ? "?" : chapter.Number) - @chapter.Title
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@chapter.Id">
+                                    @(string.IsNullOrEmpty(chapter.Number) ? "?" : chapter.Number) - @chapter.Title
+                                </option>
+                            }
+                        }
+                    }
+                </select>
+                
+                @if (!string.IsNullOrEmpty(Model.NextChapterId))
+                {
+                    <a hx-get="@Url.Action("Read", "Chapter", new { id = Model.NextChapterId })" 
+                       hx-target="#main-content" 
+                       hx-push-url="true"
+                       class="btn btn-theme-outline chapter-nav-button">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-theme-outline chapter-nav-button" disabled>
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="sidebar-section">
+        <h6>Tùy chỉnh</h6>
+        <div class="nav-item mb-3">
+            <button id="readingModeBtn" class="btn btn-theme-outline w-100">
+                <i class="bi bi-book me-2"></i>
+                <span id="readingModeText">Chế độ: Cuộn dọc</span>
+            </button>
+        </div>
+        <div class="nav-item">
+            <button id="imageScaleBtn" class="btn btn-theme-outline w-100">
+                <i class="bi bi-aspect-ratio me-2"></i>
+                <span id="imageScaleText">Tỷ lệ: Mặc định</span>
+            </button>
+        </div>
+    </div>
+</div> 
